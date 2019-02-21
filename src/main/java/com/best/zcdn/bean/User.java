@@ -20,7 +20,7 @@ public class User {
     /**
      * 用户id
      */
-    private Long    userId;
+    private Long userId;
 
     /**
      * 员工号
