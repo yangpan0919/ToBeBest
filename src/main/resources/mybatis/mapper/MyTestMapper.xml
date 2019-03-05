@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.best.zcdn.mapper.MyTestMapper">
+
+    <insert id="addMethod1">
+        INSERT  INTO  SYS_USER
+        (NAME,WORKID)
+        VALUE
+        (#{userName},#{workId})
+    </insert>
+
+    <update id="updateMethod1">
+        UPDATE SYS_USER SET NAME = #{userName} WHERE  WORKID = #{workId}
+    </update>
+
+    <insert id="delMethod1">
+        DELETE  FROM SYS_USER WHERE   WORKID = #{workId}
+    </insert>
+</mapper>
