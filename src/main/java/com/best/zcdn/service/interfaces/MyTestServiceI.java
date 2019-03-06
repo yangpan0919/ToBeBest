@@ -8,4 +8,10 @@ public interface MyTestServiceI {
     void springTransactionalTest();
 
     void method1();
+
+    void addData();
+
+    void addData1();
+
+    void selectData();
 }

@@ -18,4 +18,32 @@
     <insert id="delMethod1">
         DELETE  FROM SYS_USER WHERE   WORKID = #{workId}
     </insert>
+    <insert id="addData">
+         INSERT  INTO  SYS_USER
+        (NAME,WORKID)
+        VALUES
+        <foreach collection="list"  separator="," item="item">
+            (#{item.userName},#{item.workId})
+        </foreach>
+    </insert>
+     <insert id="addData1">
+         INSERT  INTO  SYS_USER
+        (ID,NAME,WORKID)
+        VALUES
+        <foreach collection="list"  separator="," item="item">
+            (#{item.userId},#{item.userName},#{item.workId})
+        </foreach>
+    </insert>
+
+    <select id="selectData" resultType="com.best.zcdn.bean.User">
+        SELECT
+        ID userId,
+        NAME userNamw,
+        WORKID workId
+        FROM  SYS_USER
+
+        limit #{pageNo},10
+    </select>
+
+
 </mapper>
