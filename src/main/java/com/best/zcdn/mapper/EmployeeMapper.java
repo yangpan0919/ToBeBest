@@ -2,6 +2,8 @@ package com.best.zcdn.mapper;
 
 import com.best.zcdn.bean.Employee;
 import com.best.zcdn.bean.Permission;
+import com.best.zcdn.bean.User;
+import com.best.zcdn.bean.UserBean;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,4 +21,6 @@ public interface EmployeeMapper {
 
     List<Permission> getUserById(@Param(value = "userId") Integer userId);
     void createTable();
+
+    List<UserBean> getMessageById(Integer userId);
 }

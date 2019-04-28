@@ -59,6 +59,10 @@
         </collection>
     </resultMap>
 
+    <select id="getMessageById" resultType="com.best.zcdn.bean.UserBean">
+            SELECT * FROM  SYS_USER WHERE ID =  #{userId}
+
+    </select>
     <select id="getUserById" resultMap="mmp">
         SELECT
             a.id,

@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.best.zcdn.bean.Department;
 import com.best.zcdn.bean.Employee;
 import com.best.zcdn.bean.Permission;
+import com.best.zcdn.bean.UserBean;
 import com.best.zcdn.config.ErrorCode;
 import com.best.zcdn.mapper.DepartmentMapper;
 import com.best.zcdn.mapper.EmployeeMapper;
@@ -37,8 +38,12 @@ public class DeptController {
     ConfQuAnswerServiceImpl confQuAnswerService;
 
 
-    @RequestMapping(value = "/lala", method = RequestMethod.GET)
-    public void lala(){
+    @RequestMapping(value = "/lala/{id}", method = RequestMethod.GET)
+    public List<UserBean> lala(   @PathVariable("id") Integer id){
+        List<UserBean> messageById = employeeMapper.getMessageById(id);
+        return messageById;
+
+
 //        confQuAnswerService.test();
     }
 
