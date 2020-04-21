@@ -67,12 +67,11 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!--引入druid-->
-		<!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
+		<!-- https://mvnrepository.com/artifact/com.alibaba/druid-spring-boot-starter -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
-			<artifactId>druid</artifactId>
-			<version>1.1.8</version>
+			<artifactId>druid-spring-boot-starter</artifactId>
+			<version>1.1.22</version>
 		</dependency>
 		<!--开启热部署-->
 		<dependency>

@@ -6,8 +6,17 @@ public class UserBean {
 
     private Integer id;
 
+    private Integer age;
+
     private String workId;
 
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
 
     public String getName() {
         return name;
@@ -31,5 +40,15 @@ public class UserBean {
 
     public void setWorkId(String workId) {
         this.workId = workId;
+    }
+
+    @Override
+    public String toString() {
+        return "UserBean{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", age=" + age +
+                ", workId='" + workId + '\'' +
+                '}';
     }
 }

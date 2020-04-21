@@ -14,13 +14,19 @@ import com.best.zcdn.mapper.DepartmentMapper;
 import com.best.zcdn.mapper.EmployeeMapper;
 import com.best.zcdn.service.ConfQuAnswerServiceImpl;
 import com.best.zcdn.service.interfaces.TestServiceI;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @RestController
 public class DeptController {
@@ -39,7 +45,7 @@ public class DeptController {
 
 
     @RequestMapping(value = "/lala/{id}", method = RequestMethod.GET)
-    public List<UserBean> lala(   @PathVariable("id") Integer id){
+    public List<UserBean> lala(@PathVariable("id") Integer id) {
         List<UserBean> messageById = employeeMapper.getMessageById(id);
         return messageById;
 
@@ -47,46 +53,82 @@ public class DeptController {
 //        confQuAnswerService.test();
     }
 
+    @RequestMapping(value = "/lala", method = RequestMethod.GET)
+    public String lala() {
+        System.out.println("开始进行测试");
+
+        return "messageById";
+
+
+//        confQuAnswerService.test();
+    }
+    //        confQuAnswerService.test();
+
+    private AtomicInteger num = new AtomicInteger();
+    private int count = 0;
+
+    @RequestMapping(value = "/lala/post", method = RequestMethod.POST)
+    public void lala123(HttpServletRequest request, UserBean bean) {
+        Object test1 = request.getAttribute("id");
+//        System.out.println(test1);
+        System.out.println(bean);
+//        System.out.println(num.getAndIncrement());
+        System.out.println(++count);
+        bean.setId(count);
+//        String api_gateway_auth_token = request.getHeader("api_gateway_auth_token");
+//        System.out.println(api_gateway_auth_token);
+//        try {
+//            Thread.sleep(100000L);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        System.out.println("开始进行测试");
+        if (count % 2 == 0) {
+            int i = 2 / 0;
+
+        }
+
+//        return bean;
+
+
+//        confQuAnswerService.test();
+    }
+
     @RequestMapping(value = "/getDepartment", method = RequestMethod.GET)
-    public Department getDepartment( Integer id){
+    public Department getDepartment(Integer id) {
         return departmentMapper.getDeptById(id);
     }
 
     @RequestMapping(value = "/insertDept", method = RequestMethod.GET)
-    public Department insertDept(Department department){
-       int i = departmentMapper.insertDept(department);
+    public Department insertDept(Department department) {
+        int i = departmentMapper.insertDept(department);
         System.out.println(i);
         return department;
     }
 
 
-
-
     @RequestMapping(value = "/getEmp", method = RequestMethod.GET)
-    public Employee getEmp( String id){
-       return testService.getDeptByRedis(id);
+    public Employee getEmp(String id) {
+        return testService.getDeptByRedis(id);
     }
 
 
-
-
-
     @RequestMapping(value = "/getUser", method = RequestMethod.GET)
-    public List<Permission> getUser( Integer id){
-        Long s1= System.currentTimeMillis();
+    public List<Permission> getUser(Integer id) {
+        Long s1 = System.currentTimeMillis();
         List<Permission> list = employeeMapper.getUserById(id);
-        Long s2= System.currentTimeMillis();
-        System.out.println(s2-s1);
+        Long s2 = System.currentTimeMillis();
+        System.out.println(s2 - s1);
         return list;
     }
 
 
     @RequestMapping(value = "/emp", method = RequestMethod.GET)
-    public Employee insertEmp(){
+    public Employee insertEmp() {
 
         Employee employee = new Employee();
         System.out.println(employee.getMmp());
-        if(employee.getMmp()==0){
+        if (employee.getMmp() == 0) {
             System.out.println("哦也");
         }
         employee.setId(1);
@@ -96,7 +138,7 @@ public class DeptController {
         //根据id执行删除操作
         try {
             //这里是你先删后插入的那个插入
-        }catch (DuplicateKeyException e){
+        } catch (DuplicateKeyException e) {
             //因为你是先删除，后插入的，所以这里一旦主键重复，说明并发了，此时你可以在这里执行update，也可以不做操作
             //加入log日志，说明一下
         }
@@ -106,9 +148,9 @@ public class DeptController {
         employee.setLastName("李四");
         try {
             employeeMapper.createTable();
-           int i = employeeMapper.insertEmp(employee);
+            int i = employeeMapper.insertEmp(employee);
             System.out.println(i);
-        }catch (DuplicateKeyException e){
+        } catch (DuplicateKeyException e) {
             System.out.println("DuplicateKeyException");
         }
 
@@ -117,7 +159,7 @@ public class DeptController {
     }
 
     @RequestMapping(value = "/emps", method = RequestMethod.GET)
-    public Employee insertEmps(){
+    public Employee insertEmps() {
         List<Employee> e = new ArrayList<>();
 
         Employee employee = new Employee();
@@ -141,16 +183,16 @@ public class DeptController {
         employee = new Employee();
         employee.setLastName("杨七");
         e.add(employee);
-       int i = employeeMapper.insertEmps(e);
+        int i = employeeMapper.insertEmps(e);
         System.out.println(i);
         return employee;
     }
 
-    @RequestMapping(path = "/confQuestionAnswer",method =RequestMethod.GET)
+    @RequestMapping(path = "/confQuestionAnswer", method = RequestMethod.GET)
 
-    public String confQuestionAnswer(){
+    public String confQuestionAnswer() {
 //        String body ="{'op':'del','qaSet':[{'id':'6'},{'id':'7'}]}";
-        String body ="{'op':'del','qaSet':[{'questions':['效益','笑意同学'],'answers':['wozaizheli']},{'id':'6','questions':['收到','更好同学'],answers:['你环境']}]}";
+        String body = "{'op':'del','qaSet':[{'questions':['效益','笑意同学'],'answers':['wozaizheli']},{'id':'6','questions':['收到','更好同学'],answers:['你环境']}]}";
         long start = System.currentTimeMillis();
         JSONObject ret = null;
         List<Integer> list = null;
@@ -158,35 +200,36 @@ public class DeptController {
             JSONObject object = JSONObject.parseObject(body);
             String op = object.getString("op");
             JSONArray qaSet = object.getJSONArray("qaSet");
-            if (qaSet == null){
-                ErrorCode errorCode = new ErrorCode(ErrorCode.INVALID_PARAM,"qaSet is null");
-                ret =errorCode.toJSONObject();
-                return  ret.toJSONString();
+            if (qaSet == null) {
+                ErrorCode errorCode = new ErrorCode(ErrorCode.INVALID_PARAM, "qaSet is null");
+                ret = errorCode.toJSONObject();
+                return ret.toJSONString();
             }
 
-            if (StringUtils.isEmpty(op)  ||qaSet.size()==0){
-                ErrorCode errorCode = new ErrorCode(ErrorCode.INVALID_PARAM,op);
-                ret =errorCode.toJSONObject();
-                return  ret.toJSONString();
+            if (StringUtils.isEmpty(op) || qaSet.size() == 0) {
+                ErrorCode errorCode = new ErrorCode(ErrorCode.INVALID_PARAM, op);
+                ret = errorCode.toJSONObject();
+                return ret.toJSONString();
             }
-            list = confQuAnswerService.conf(op,qaSet); ;
-            if (list==null){
-                ErrorCode errorCode = new ErrorCode(ErrorCode.INVALID_PARAM,body);
-                ret =errorCode.toJSONObject();
-                return  ret.toJSONString();
+            list = confQuAnswerService.conf(op, qaSet);
+            ;
+            if (list == null) {
+                ErrorCode errorCode = new ErrorCode(ErrorCode.INVALID_PARAM, body);
+                ret = errorCode.toJSONObject();
+                return ret.toJSONString();
             }
-            ErrorCode errorCode = new ErrorCode(ErrorCode.SUCCED,JSONArray.toJSONString(list));
-            ret =errorCode.toJSONObject();
+            ErrorCode errorCode = new ErrorCode(ErrorCode.SUCCED, JSONArray.toJSONString(list));
+            ret = errorCode.toJSONObject();
             return ret.toJSONString();
-        }catch (JSONException e){
-            ErrorCode errorCode = new ErrorCode(ErrorCode.INVALID_PARAM,body);
-            ret =errorCode.toJSONObject();
-            return  ret.toJSONString();
-        }catch (Exception e){
+        } catch (JSONException e) {
+            ErrorCode errorCode = new ErrorCode(ErrorCode.INVALID_PARAM, body);
+            ret = errorCode.toJSONObject();
+            return ret.toJSONString();
+        } catch (Exception e) {
             ErrorCode errorCode = new ErrorCode(ErrorCode.SYSTEM_ERR);
-            ret =errorCode.toJSONObject();
+            ret = errorCode.toJSONObject();
             //加入error日志  自己添加一下
-            return  ret.toJSONString();
+            return ret.toJSONString();
         }
 
     }
